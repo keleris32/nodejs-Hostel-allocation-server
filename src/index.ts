@@ -6,7 +6,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
 // Routes
-import authRouter from './routes/auth';
+import authRouter from './routes/authRoutes';
 import refreshTokenRouter from './routes/refreshTokenRoute';
 
 const app: Application = express();
