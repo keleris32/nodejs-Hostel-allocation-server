@@ -1,5 +1,5 @@
 export interface Student {
-  id: number;
+  id?: string;
   room_id?: number;
   name: string;
   level: string;
