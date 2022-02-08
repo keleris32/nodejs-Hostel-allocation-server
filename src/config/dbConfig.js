@@ -1,7 +1,5 @@
 require('dotenv').config();
 
-console.log('Config!', process.env.PGHOST);
-
 // Single source to handle all the env variables
 module.exports = {
   host: process.env.PGHOST,
