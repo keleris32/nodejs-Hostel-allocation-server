@@ -9,12 +9,8 @@ const {
   port,
 } = require('./src/config/dbConfig');
 
-console.log(host, user);
-
 // DB queries
 const query = require('./src/dbQueries/createTable');
-
-console.log(query.createRoomsTableQuery);
 
 // Initialize Client instance
 const client = new Client({
