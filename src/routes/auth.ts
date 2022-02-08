@@ -1,7 +1,7 @@
 import express from 'express';
 
-import { loginStudent } from '../controllers/auth/login';
-import { registerStudent } from '../controllers/auth/register';
+import { loginStudent } from '../controllers/auth/loginController';
+import { registerStudent } from '../controllers/auth/registerController';
 
 const authRouter = express.Router();
 
