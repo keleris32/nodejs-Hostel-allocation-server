@@ -8,7 +8,7 @@ import {
 import { SendRefreshToken } from '../middlewares/sendRefreshToken';
 
 // @ts-ignore
-import pool from '../../config/dbConnector';
+import pool from '../config/dbConnector';
 
 export const refreshAccessToken = async (req: Request, res: Response) => {
   const refreshToken = req.cookies.CEU;
