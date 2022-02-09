@@ -58,7 +58,7 @@ export function createDbTables(_req: Request, res: Response) {
   // create students table
   async function createStudentsTable() {
     try {
-      // Continue with queries since the connection is already open,
+      // Continue with queries since the connection is already open
       await client.query(query.createStudentsTableQuery);
 
       res
