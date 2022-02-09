@@ -42,6 +42,9 @@ export const refreshAccessToken = async (req: Request, res: Response) => {
   // Return a new accessToken if student matric number matches.
   return res.send({
     ok: true,
-    access_token: CreateAccessToken(student.rows[0].matric_no),
+    access_token: CreateAccessToken(
+      student.rows[0].matric_no,
+      student.rows[0].gender
+    ),
   });
 };
