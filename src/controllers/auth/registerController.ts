@@ -6,6 +6,8 @@ import {
   CreateRefreshToken,
 } from '../../middlewares/createToken';
 import { SendRefreshToken } from '../../middlewares/sendRefreshToken';
+import { successResponseBody } from '../../utils/successResponse';
+import { errorResponseBody } from '../../utils/errorResponse';
 
 // @ts-ignore
 import pool from '../../config/dbConnector';
@@ -40,17 +42,19 @@ export const registerStudent = async (req: Request, res: Response) => {
       course: course,
       matric_no: matric_no,
       gender: gender,
-      access_token: CreateAccessToken(matric_no),
+      access_token: CreateAccessToken(matric_no, gender),
     };
 
-    res.status(201).json(responseBody);
+    const responseMessage = 'Registration was successful!';
+
+    res.status(201).json(successResponseBody(responseMessage, responseBody));
   } catch (error) {
     if (error.message === 'This matric number has been used!') {
-      res.status(400).json({ message: `${error.message}` });
+      res.status(400).json(errorResponseBody(error.message));
     } else if (error.message.includes('value too long')) {
-      res.status(422).json({ message: 'Invalid values provided!' });
+      res.status(422).json(errorResponseBody('Invalid credentials provided!'));
     } else {
-      res.status(500).json({ message: 'Internal server error' });
+      res.status(500).json(errorResponseBody('Internal Server Error!'));
     }
   }
 };

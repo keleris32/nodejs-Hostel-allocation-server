@@ -6,6 +6,8 @@ import {
   CreateRefreshToken,
 } from '../../middlewares/createToken';
 import { SendRefreshToken } from '../../middlewares/sendRefreshToken';
+import { successResponseBody } from '../../utils/successResponse';
+import { errorResponseBody } from '../../utils/errorResponse';
 
 // @ts-ignore
 import pool from '../../config/dbConnector';
@@ -41,7 +43,7 @@ export const loginStudent = async (req: Request, res: Response) => {
         course: student.rows[0].course,
         matric_no: student.rows[0].matric_no,
         gender: student.rows[0].gender,
-        access_token: CreateAccessToken(matric_no),
+        access_token: CreateAccessToken(matric_no, student.rows[0].gender),
       };
 
       res.status(201).json(responseBody);
@@ -59,17 +61,19 @@ export const loginStudent = async (req: Request, res: Response) => {
         course: student.rows[0].course,
         matric_no: student.rows[0].matric_no,
         gender: student.rows[0].gender,
-        access_token: CreateAccessToken(matric_no),
+        access_token: CreateAccessToken(matric_no, student.rows[0].gender),
         hostel_details: room.rows[0],
       };
 
-      res.status(201).json(responseBody);
+      const responseMessage = 'Authentication was successful!';
+
+      res.status(201).json(successResponseBody(responseMessage, responseBody));
     }
   } catch (error) {
     if (error.message) {
-      res.status(422).json({ message: `${error.message}` });
+      res.status(422).json(errorResponseBody(error.message));
     } else {
-      res.status(500).json({ message: 'Internal server error' });
+      res.status(500).json(errorResponseBody('Internal Server Error'));
     }
   }
 };
