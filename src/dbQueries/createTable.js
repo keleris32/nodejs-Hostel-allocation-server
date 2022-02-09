@@ -1,6 +1,6 @@
 // Query for creating student table
 module.exports.createStudentsTableQuery = `CREATE TABLE IF NOT EXISTS students (
-    id SERIAL PRIMARY KEY,
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   	room_id INT,
     name VARCHAR (255) NOT NULL,
     level VARCHAR (10) NOT NULL,
