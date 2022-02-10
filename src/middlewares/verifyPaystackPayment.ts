@@ -22,6 +22,10 @@ export const verifyPayment = (
         // If Successful then let req.user be equal to the metadata sent by paystack
         req.user = event.data.metadata;
 
+        console.log('Metaaaaa', event.data.metadata);
+
+        console.log('Userrrr', req.user);
+
         res.sendStatus(200);
 
         next();
