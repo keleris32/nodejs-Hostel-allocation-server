@@ -15,18 +15,11 @@ export const verifyPayment = (
 
     if (hash === req.headers['x-paystack-signature']) {
       const event = req.body;
-      console.log('Event >>>>', event);
       if (event.data.status === 'success') {
         // Means the transaction was successful
 
         // If Successful then let req.user be equal to the metadata sent by paystack
         req.user = event.data.metadata;
-
-        console.log('Metaaaaa', event.data.metadata);
-
-        console.log('Userrrr', req.user);
-
-        // res.sendStatus(200);
 
         next();
       } else {
