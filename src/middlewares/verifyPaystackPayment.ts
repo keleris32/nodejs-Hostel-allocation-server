@@ -26,7 +26,7 @@ export const verifyPayment = (
 
         console.log('Userrrr', req.user);
 
-        res.sendStatus(200);
+        // res.sendStatus(200);
 
         next();
       } else {
