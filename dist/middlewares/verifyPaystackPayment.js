@@ -7,7 +7,36 @@ var __importDefault =
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.verifyPayment = void 0;
 const crypto_1 = __importDefault(require('crypto'));
-const verifyPayment = (req, res, next) => {
+const errorResponse_1 = require('../utils/errorResponse');
+const successResponse_1 = require('../utils/successResponse');
+const dbConnector_1 = __importDefault(require('../config/dbConnector'));
+
+const allocateRoomController = async (metadad) => {
+  try {
+    const room_id = metadata.user.room_id;
+    const matricNumber = metadata.user.matricNumber;
+    await dbConnector_1.default.query(
+      'UPDATE students SET room_id = $1 WHERE matric_no = $2',
+      [room_id, matricNumber]
+    );
+    const responseMessage = 'Room allocated successfully!';
+    const responseData = {};
+    res
+      .status(201)
+      .json(
+        (0, successResponse_1.successResponseBody)(
+          responseMessage,
+          responseData
+        )
+      );
+  } catch (error) {
+    res
+      .status(500)
+      .json((0, errorResponse_1.errorResponseBody)('Internal Server Error!'));
+  }
+};
+
+const verifyPayment = (req, res) => {
   try {
     const secret = process.env.PAYSTACK_SECRET_KEY;
     const hash = crypto_1.default
@@ -17,13 +46,8 @@ const verifyPayment = (req, res, next) => {
     if (hash === req.headers['x-paystack-signature']) {
       const event = req.body;
       if (event.data.status === 'success') {
-        console.log('Metaaaaa', event.data.metadata);
-
-        console.log('Userrrr', req.user);
-
-        req.user = event.data.metadata;
-        // res.sendStatus(200);
-        next();
+        // Call fn to allocate room on success
+        allocateRoomController(event.data.metadata);
       } else {
         res.sendStatus(500);
       }
