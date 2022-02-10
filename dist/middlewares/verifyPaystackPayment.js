@@ -16,14 +16,13 @@ const verifyPayment = (req, res, next) => {
       .digest('hex');
     if (hash === req.headers['x-paystack-signature']) {
       const event = req.body;
-      console.log('Event >>>>', event);
       if (event.data.status === 'success') {
         console.log('Metaaaaa', event.data.metadata);
 
         console.log('Userrrr', req.user);
 
         req.user = event.data.metadata;
-        res.sendStatus(200);
+        // res.sendStatus(200);
         next();
       } else {
         res.sendStatus(500);
