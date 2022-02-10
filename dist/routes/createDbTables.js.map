@@ -1,0 +1,1 @@
+{"version":3,"file":"createDbTables.js","sourceRoot":"","sources":["../../src/routes/createDbTables.ts"],"names":[],"mappings":";;;;;AAAA,sDAA8B;AAC9B,kFAAuE;AAEvE,MAAM,kBAAkB,GAAG,iBAAO,CAAC,MAAM,EAAE,CAAC;AAI5C,kBAAkB,CAAC,IAAI,CAAC,gBAAgB,EAAE,uCAAc,CAAC,CAAC;AAE1D,kBAAe,kBAAkB,CAAC"}
