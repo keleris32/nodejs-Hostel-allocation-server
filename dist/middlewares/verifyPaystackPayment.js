@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.verifyPayment = void 0;
 const crypto_1 = __importDefault(require("crypto"));
-const verifyPayment = (req, res, _next) => {
+const verifyPayment = (req, res, next) => {
     try {
         const secret = process.env.PAYSTACK_SECRET_KEY;
         const hash = crypto_1.default
@@ -15,7 +15,14 @@ const verifyPayment = (req, res, _next) => {
         if (hash === req.headers['x-paystack-signature']) {
             const event = req.body;
             console.log('Event >>>>', event);
-            res.sendStatus(200);
+            if (event.data.status === 'success') {
+                req.user = event.data.metadata;
+                res.sendStatus(200);
+                next();
+            }
+            else {
+                res.sendStatus(500);
+            }
         }
         else {
             throw new Error('An Error occured while verifying events');
