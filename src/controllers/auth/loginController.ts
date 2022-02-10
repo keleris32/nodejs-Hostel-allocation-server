@@ -46,7 +46,9 @@ export const loginStudent = async (req: Request, res: Response) => {
         access_token: CreateAccessToken(matric_no, student.rows[0].gender),
       };
 
-      res.status(201).json(responseBody);
+      const responseMessage = 'Authentication was successful!';
+
+      res.status(201).json(successResponseBody(responseMessage, responseBody));
     } else {
       const room = await pool.query(
         'SELECT rooms.id, rooms.hostel, rooms.room_type, rooms.room_number, rooms.price, rooms.no_of_inhabitants, rooms.type_of_hostel FROM students INNER JOIN rooms ON students.room_id = rooms.id WHERE students.id = $1',
