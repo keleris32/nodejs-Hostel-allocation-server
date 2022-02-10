@@ -13,22 +13,13 @@ const dbConnector_1 = __importDefault(require('../config/dbConnector'));
 
 const allocateRoomController = async (metadata, res) => {
   try {
-    const room_id = metadata.user.room_id;
-    const matricNumber = metadata.user.matricNumber;
+    const room_id = metadata.room_id;
+    const student_id = metadata.student_id;
     await dbConnector_1.default.query(
-      'UPDATE students SET room_id = $1 WHERE matric_no = $2',
-      [room_id, matricNumber]
+      'UPDATE students SET room_id = $1 WHERE id = $2',
+      [room_id, student_id]
     );
-    // const responseMessage = 'Room allocated successfully!';
-    // const responseData = {};
-    // res
-    //   .status(201)
-    //   .json(
-    //     (0, successResponse_1.successResponseBody)(
-    //       responseMessage,
-    //       responseData
-    //     )
-    //   );
+
     res.sendStatus(200);
   } catch (error) {
     console.log(error);
