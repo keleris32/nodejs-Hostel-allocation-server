@@ -17,16 +17,14 @@ export const getStudent = async (req: Request, res: Response) => {
 
     if (student.rowCount !== 0) {
       if (student.rows[0].room_id !== null) {
-        let studentWithoutRoom = await pool.query(
+        let studentWithRoom = await pool.query(
           'SELECT students.*, rooms.hostel, rooms.room_type, rooms.room_number, rooms.price, rooms.no_of_inhabitants, rooms.type_of_hostel FROM students INNER JOIN rooms ON students.room_id = rooms.id WHERE id = $1',
           [id]
         );
 
         res
           .status(200)
-          .json(
-            successResponseBody(responseMessage, studentWithoutRoom.rows[0])
-          );
+          .json(successResponseBody(responseMessage, studentWithRoom.rows[0]));
       } else {
         res
           .status(200)
