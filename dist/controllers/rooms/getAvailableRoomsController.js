@@ -32,7 +32,7 @@ const getAvailableRooms = async (req, res) => {
       throw new Error('There are no available rooms!');
     }
   } catch (error) {
-    console.log(JSON.stringify(error));
+    console.log('errrro>>>>', error);
     res
       .status(500)
       .send((0, errorResponse_1.errorResponseBody)('Internal Server Error!'));
