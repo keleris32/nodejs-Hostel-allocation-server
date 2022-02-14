@@ -12,7 +12,7 @@ const successResponse_1 = require('../../utils/successResponse');
 const dbConnector_1 = __importDefault(require('../../config/dbConnector'));
 const getAvailableRooms = async (req, res) => {
   try {
-    const studentGender = req.user.gender;
+    const studentGender = req.user.gender.toLowerCase();
     const roomCapacity = 4;
     const availableRooms = await dbConnector_1.default.query(
       'SELECT id, hostel, room_type, room_number, price, no_of_inhabitants, type_of_hostel FROM rooms WHERE type_of_hostel = $1 AND no_of_inhabitants < $2',
@@ -32,10 +32,15 @@ const getAvailableRooms = async (req, res) => {
       throw new Error('There are no available rooms!');
     }
   } catch (error) {
-    console.log('errrro>>>>', error);
-    res
-      .status(500)
-      .send((0, errorResponse_1.errorResponseBody)('Internal Server Error!'));
+    if (error.message) {
+      res
+        .status(400)
+        .send((0, errorResponse_1.errorResponseBody)(error.message));
+    } else {
+      res
+        .status(500)
+        .send((0, errorResponse_1.errorResponseBody)('Internal Server Error!'));
+    }
   }
 };
 exports.getAvailableRooms = getAvailableRooms;

@@ -8,7 +8,7 @@ import pool from '../../config/dbConnector';
 
 export const getAvailableRooms = async (req: Request, res: Response) => {
   try {
-    const studentGender = req.user!.gender;
+    const studentGender = req.user!.gender.toLowerCase();
     const roomCapacity = 4;
 
     const availableRooms = await pool.query(
@@ -30,6 +30,10 @@ export const getAvailableRooms = async (req: Request, res: Response) => {
       throw new Error('There are no available rooms!');
     }
   } catch (error) {
-    res.status(500).send(errorResponseBody('Internal Server Error!'));
+    if (error.message) {
+      res.status(400).send(errorResponseBody(error.message));
+    } else {
+      res.status(500).send(errorResponseBody('Internal Server Error!'));
+    }
   }
 };
