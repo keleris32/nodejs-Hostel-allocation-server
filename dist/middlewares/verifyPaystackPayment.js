@@ -15,6 +15,9 @@ const allocateRoomController = async (metadata, res) => {
   try {
     const room_id = metadata.room_id;
     const student_id = metadata.student_id;
+
+    console.log('room_id >>>>>>', room_id);
+    console.log('student_id >>>>>>', student_id);
     await dbConnector_1.default.query(
       'UPDATE students SET room_id = $1 WHERE id = $2',
       [room_id, student_id]
@@ -22,7 +25,7 @@ const allocateRoomController = async (metadata, res) => {
 
     res.sendStatus(200);
   } catch (error) {
-    console.log(error);
+    console.log('Errrrrrrrrr .>>>>>>>>>', error.response);
   }
 };
 
@@ -35,6 +38,7 @@ const verifyPayment = async (req, res) => {
       .digest('hex');
     if (hash === req.headers['x-paystack-signature']) {
       const event = req.body;
+      console.log('Event >>>>>>>>', event.data.status);
       if (event.data.status === 'success') {
         // Call fn to allocate room on success
         allocateRoomController(event.data.metadata, res);
