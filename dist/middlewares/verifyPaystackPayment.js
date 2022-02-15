@@ -22,7 +22,7 @@ const allocateRoomController = async (metadata, res) => {
 
     res.sendStatus(200);
   } catch (error) {
-    console.log(error);
+    console.log('Errrrrrrrrr', error.response);
   }
 };
 
