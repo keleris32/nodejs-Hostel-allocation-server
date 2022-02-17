@@ -34,6 +34,7 @@ const verifyPayment = async (req, res) => {
     if (hash === req.headers['x-paystack-signature']) {
       const event = req.body;
       if (event.data.status === 'success') {
+        console.log(JSON.stringify(event.data, null, 2));
         res.sendStatus(200);
 
         // Call fn to allocate room on success
