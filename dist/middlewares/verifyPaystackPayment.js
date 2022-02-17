@@ -37,7 +37,7 @@ const verifyPayment = async (req, res) => {
       const event = req.body;
       if (event.data.status === 'success') {
         // Call fn to allocate room on success
-        allocateRoomController(event.data.metadata, res);
+        await allocateRoomController(event.data.metadata, res);
       } else {
         res.sendStatus(500);
       }
