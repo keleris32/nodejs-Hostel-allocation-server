@@ -19,8 +19,6 @@ const allocateRoomController = async (metadata, res) => {
       'UPDATE students SET room_id = $1 WHERE id = $2',
       [room_id, student_id]
     );
-
-    res.sendStatus(200);
   } catch (error) {
     console.log('Errrrrrrrrr', error.response);
   }
@@ -36,6 +34,8 @@ const verifyPayment = async (req, res) => {
     if (hash === req.headers['x-paystack-signature']) {
       const event = req.body;
       if (event.data.status === 'success') {
+        res.sendStatus(200);
+
         // Call fn to allocate room on success
         await allocateRoomController(event.data.metadata, res);
       } else {
