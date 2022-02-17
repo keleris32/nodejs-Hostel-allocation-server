@@ -7,9 +7,22 @@ var __importDefault =
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.verifyPayment = void 0;
 const crypto_1 = __importDefault(require('crypto'));
+const redis_1 = __importDefault(require('redis'));
+const promisify_1 = __importDefault(require('util'));
 const errorResponse_1 = require('../utils/errorResponse');
 const successResponse_1 = require('../utils/successResponse');
 const dbConnector_1 = __importDefault(require('../config/dbConnector'));
+
+const client = redis_1.default.createClient({
+  url: process.env.REDIS_URI,
+  socket: {
+    tls: true,
+    rejectUnauthorized: false,
+  },
+});
+
+const GET_ASYNC = promisify_1.promisify(client.get).bind(client);
+const SET_ASYNC = promisify_1.promisify(client.set).bind(client);
 
 const allocateRoomController = async (metadata, res) => {
   try {
@@ -34,7 +47,16 @@ const verifyPayment = async (req, res) => {
     if (hash === req.headers['x-paystack-signature']) {
       const event = req.body;
       if (event.data.status === 'success') {
-        console.log(JSON.stringify(event.data, null, 2));
+        const saveResult = await SET_ASYNC(
+          'webhook',
+          JSON.stringify(event.data.metadata),
+          'EX',
+          20
+        );
+
+        console.log('Cached!!!!', saveResult);
+
+        // console.log(JSON.stringify(event.data, null, 2));
         res.sendStatus(200);
 
         // Call fn to allocate room on success
