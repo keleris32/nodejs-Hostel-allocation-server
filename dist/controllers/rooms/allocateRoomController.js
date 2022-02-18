@@ -16,7 +16,7 @@ const allocateRoomController = async (req, res) => {
     const room_id = res.locals.metadata.room_id;
     const student_id = res.locals.metadata.student_id;
 
-    console.log('Reqqq', req.locals);
+    console.log('locals', res.locals);
     await dbConnector_1.default.query(
       'UPDATE students SET room_id = $1 WHERE id = $2',
       [room_id, student_id]
