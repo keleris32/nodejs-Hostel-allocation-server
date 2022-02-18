@@ -37,6 +37,8 @@ const verifyPayment = async (req, res, next) => {
         req.locals.roomId = event.data.metadata.room_id;
         req.locals.studentId = event.data.metadata.student_id;
 
+        console.log('localllllssss', req.locals);
+
         // console.log(JSON.stringify(event.data, null, 2));
         res.sendStatus(200);
 
