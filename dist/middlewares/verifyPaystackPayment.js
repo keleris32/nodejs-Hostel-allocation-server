@@ -37,8 +37,6 @@ const verifyPayment = async (req, res, next) => {
         res.locals.roomId = event.data.metadata.room_id;
         res.locals.studentId = event.data.metadata.student_id;
 
-        console.log('verify Payment', res.locals.roomId);
-
         // console.log(JSON.stringify(event.data, null, 2));
         res.sendStatus(200);
 
@@ -52,7 +50,6 @@ const verifyPayment = async (req, res, next) => {
       throw new Error('An Error occured while verifying events');
     }
   } catch (error) {
-    console.log('Errrrrrrrrrrrrrnnnn', error);
     res.sendStatus(500);
   }
 };

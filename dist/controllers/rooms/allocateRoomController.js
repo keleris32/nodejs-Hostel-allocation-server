@@ -16,8 +16,6 @@ const allocateRoomController = async (req, res) => {
     const room_id = res.locals.roomId;
     const student_id = res.locals.studentId;
 
-    console.log('roooom', res.locals.roomId);
-
     console.log('localsZZZ', room_id);
     await dbConnector_1.default.query(
       'UPDATE students SET room_id = $1 WHERE id = $2',
@@ -28,7 +26,7 @@ const allocateRoomController = async (req, res) => {
     // res.status(201).json((0, successResponse_1.successResponseBody)(responseMessage, responseData));
   } catch (error) {
     // res.status(500).json((0, errorResponse_1.errorResponseBody)('Internal Server Error!'));
-    console.log('Erro Allo >>>', error.response);
+    console.log('Erro Allo >>>', JSON.stringify(error, null, 2));
   }
 };
 exports.allocateRoomController = allocateRoomController;
