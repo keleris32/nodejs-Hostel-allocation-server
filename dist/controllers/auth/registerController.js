@@ -15,6 +15,7 @@ const errorResponse_1 = require('../../utils/errorResponse');
 const dbConnector_1 = __importDefault(require('../../config/dbConnector'));
 const registerStudent = async (req, res) => {
   const uuid = (0, uuid_1.v4)();
+  console.log('UUID >>>', uuid);
   const { name, level, course, matric_no, password, gender } = req.body;
   try {
     const student = await dbConnector_1.default.query(
