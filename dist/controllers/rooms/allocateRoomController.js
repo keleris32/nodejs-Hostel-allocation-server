@@ -13,8 +13,8 @@ const allocateRoomController = async (req, res) => {
   try {
     // const room_id = req.user.room_id;
     // const matricNumber = req.user.matricNumber;
-    const room_id = req.locals.roomId;
-    const student_id = req.locals.studentId;
+    const room_id = res.locals.metadata.room_id;
+    const student_id = res.locals.metadata.student_id;
 
     console.log('Reqqq', req.locals);
     await dbConnector_1.default.query(

@@ -34,10 +34,9 @@ const verifyPayment = async (req, res, next) => {
     if (hash === req.headers['x-paystack-signature']) {
       const event = req.body;
       if (event.data.status === 'success') {
-        req.locals.roomId = event.data.metadata.room_id;
-        req.locals.studentId = event.data.metadata.student_id;
+        res.locals.metaData = event.data.metadata;
 
-        console.log('localllllssss', req.locals);
+        console.log('localllllssss', res.locals);
 
         // console.log(JSON.stringify(event.data, null, 2));
         res.sendStatus(200);
