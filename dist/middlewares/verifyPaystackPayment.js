@@ -52,7 +52,7 @@ const verifyPayment = async (req, res, next) => {
       throw new Error('An Error occured while verifying events');
     }
   } catch (error) {
-    console.log('Errrrrrrrrrrrrr', error.response);
+    console.log('Errrrrrrrrrrrrrnnnn', error);
     res.sendStatus(500);
   }
 };
