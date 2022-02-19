@@ -16,7 +16,6 @@ const dbConnector_1 = __importDefault(require('../../config/dbConnector'));
 const registerStudent = async (req, res) => {
   const uuid = (0, uuid_1.v4)();
   const { name, level, course, matric_no, password, gender } = req.body;
-  console.log('UUID >>>', uuid);
   try {
     const student = await dbConnector_1.default.query(
       'SELECT matric_no FROM students WHERE matric_no = $1',
@@ -35,6 +34,7 @@ const registerStudent = async (req, res) => {
       (0, createToken_1.CreateRefreshToken)(matric_no)
     );
     const responseBody = {
+      id: uuid,
       name: name,
       level: level,
       course: course,
