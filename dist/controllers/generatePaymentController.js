@@ -11,6 +11,8 @@ const errorResponse_1 = require('../utils/errorResponse');
 const generatePaystackPaymentIntent = async (req, res) => {
   try {
     const { email, amount, student_id, room_id } = req.body;
+    console.log('reqqq body', req.body);
+    console.log('student >>>>>', student_id);
     if (!email || !amount || !student_id || !room_id) {
       throw new Error('Provide valid credentials!');
     }

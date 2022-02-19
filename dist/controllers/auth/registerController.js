@@ -34,6 +34,7 @@ const registerStudent = async (req, res) => {
       (0, createToken_1.CreateRefreshToken)(matric_no)
     );
     const responseBody = {
+      id: uuid,
       name: name,
       level: level,
       course: course,
