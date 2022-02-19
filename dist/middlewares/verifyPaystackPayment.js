@@ -7,22 +7,6 @@ var __importDefault =
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.verifyPayment = void 0;
 const crypto_1 = __importDefault(require('crypto'));
-const errorResponse_1 = require('../utils/errorResponse');
-const successResponse_1 = require('../utils/successResponse');
-// const dbConnector_1 = __importDefault(require('../config/dbConnector'));
-
-// const allocateRoomController = async (metadata, res) => {
-//   try {
-//     const room_id = metadata.room_id;
-//     const student_id = metadata.student_id;
-//     await dbConnector_1.default.query(
-//       'UPDATE students SET room_id = $1 WHERE id = $2',
-//       [room_id, student_id]
-//     );
-//   } catch (error) {
-//     console.log('Errrrrrrrrr', error.response);
-//   }
-// };
 
 const verifyPayment = async (req, res, next) => {
   try {
@@ -34,19 +18,12 @@ const verifyPayment = async (req, res, next) => {
     if (hash === req.headers['x-paystack-signature']) {
       const event = req.body;
       if (event.data.status === 'success') {
-        console.log('Event >>>', event.data.metadata);
         res.locals.roomId = event.data.metadata.room_id;
         res.locals.studentId = event.data.metadata.student_id;
 
-        console.log('verifyyy room', res.locals.roomId);
-        console.log('verifyyy', res.locals.studentId);
-
-        // console.log(JSON.stringify(event.data, null, 2));
         res.sendStatus(200);
 
         return next();
-        // Call fn to allocate room on success
-        // await allocateRoomController(event.data.metadata, res);
       } else {
         res.sendStatus(500);
       }
